@@ -10,4 +10,11 @@ export default defineConfig({
     tailwindcss(),
     babel({ presets: [reactCompilerPreset()] })
   ],
+  resolve: {
+    // Include conditional exports that modern packages advertise
+    conditions: ['import', 'module', 'browser', 'development']
+  },
+  optimizeDeps: {
+    include: ['@tanstack/react-query']
+  },
 })
