@@ -1,30 +1,51 @@
 import { Employee } from "./employee";
 
+export type PayrollStatus =
+    | 'DRAFT'
+    | 'PENDING'
+    | 'PAID'
+    | 'CANCELLED';
+
+export type PayrollItemType =
+    | 'EARNING'
+    | 'DEDUCTION';
+
+export type PayrollPeriod = {
+    month: number;
+    year: number;
+};
+
+export type PayrollItem = {
+    id: string;
+    description: string;
+    amount: number;
+    type: PayrollItemType;
+};
+
 export type Payroll = {
     id: string;
+
     employee: Employee;
-    referencePeriod: Date;
-    grossSalary: number;
+
+    period: PayrollPeriod;
+
+    items: PayrollItem[];
+
+    grossAmount: number;
+    totalEarnings: number;
     totalDeductions: number;
-    netSalary: number;
-    status: 'PENDING' | 'PAID' | 'CANCELLED'; // PENDING, PAID, CANCELLED;
-    earnings: PayrollItem[];
-    deductions: PayrollItem[]
-}
+    netAmount: number;
 
-type PayrollItem = {
-    // private String description;
-    // private BigDecimal value;
-    // private ItemType type; // ENTRY ou DEDUCTION
-    description: string;
-    value: number;
-    type: 'ENTRY' | 'DEDUCTION'
-}
+    status: PayrollStatus;
+
+    generatedAt: Date;
+    paymentDate?: Date;
+};
 
 
-export type Paycheck = Omit<Payroll, "employee"> & {
-    employeeName: string;
+export type PayrollSummary = Omit<Payroll, 'employee' | 'items'> & {
     employeeId: string;
+    employeeName: string;
     departmentName: string;
-    postion: string
+    positionName: string;
 };
