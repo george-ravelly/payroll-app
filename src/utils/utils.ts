@@ -1,3 +1,5 @@
+import { PayrollPeriod } from "@/types/payroll";
+
 export const getErrorsMessage = (error: unknown): string => {
     let message: string;
 
@@ -14,4 +16,12 @@ export const getErrorsMessage = (error: unknown): string => {
     return message;
 }
 
-export default getErrorsMessage;
+
+export function getPeriod(period: PayrollPeriod) {
+    return `${period.month}/${period.year}`
+}
+
+export const formatCurrency = (value: number) => value.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+});

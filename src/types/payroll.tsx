@@ -41,11 +41,3 @@ export type Payroll = {
     generatedAt: Date;
     paymentDate?: Date;
 };
-
-
-export type PayrollSummary = Omit<Payroll, 'employee' | 'items'> & {
-    employeeId: string;
-    employeeName: string;
-    departmentName: string;
-    positionName: string;
-};

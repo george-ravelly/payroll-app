@@ -4,7 +4,8 @@ export type Employee = {
   email: string
   cpf: string
   departmentName: string
+  phone: string
   active: boolean
-  baseSalary: number,
   position: string
+  hireDate: Date
 }
