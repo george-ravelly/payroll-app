@@ -8,27 +8,20 @@ interface Props {
   paycheckModal: RefObject<HTMLDialogElement | null>;
 }
 
-export default function QuickActions ({ paycheckModal }: Props) {
+export default function QuickActions () {
   const navigate = useNavigate();
+  function handleModal () {}
 
   return <div className="flex justify-end m-2">
     <ul className="menu menu-horizontal bg-base-200 rounded-box">
-      <li>
+      <li className="me-1">
         {/* Bater ponto */}
         <div className="tooltip" data-tip="Bater ponto!">
-          <button onClick={() => navigate('/')}>
+          <button onClick={handleModal}>
             <Icon path={mdiCalendarEdit} size={1}></Icon>
           </button>
         </div>
         
-      </li>
-      <li>
-        {/* Holerite */}
-        <div className="tooltip" data-tip="Visualizar Holerite">
-          <button onClick={() => paycheckModal.current?.showModal()}>
-            <Icon path={mdiNoteText} size={1}></Icon>
-          </button>
-        </div>
       </li>
       <li>
         {/* Ajuda do RH */}
