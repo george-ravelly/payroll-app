@@ -1,43 +1,38 @@
-import { Employee } from "./employee";
+import { EmployeeSchema } from "./employee";
+import z from "zod"
 
-export type PayrollStatus =
-    | 'DRAFT'
-    | 'PENDING'
-    | 'PAID'
-    | 'CANCELLED';
+export const PayrollItemTypeSchema = z.enum(['EARNING', 'DEDUCTION']);
+export type PayrollItemType = z.infer<typeof PayrollItemTypeSchema>;
 
-export type PayrollItemType =
-    | 'EARNING'
-    | 'DEDUCTION';
+export const PayrollPeriodSchema = z.object({
+    month: z.number(),
+    year: z.number(),
+});
+export type PayrollPeriod = z.infer<typeof PayrollPeriodSchema>;
 
-export type PayrollPeriod = {
-    month: number;
-    year: number;
-};
+export const PayrollItemSchema = z.object({
+    id: z.string(),
+    description: z.string(),
+    amount: z.number(),
+    type: PayrollItemTypeSchema,
+});
+export type PayrollItem = z.infer<typeof PayrollItemSchema>;
 
-export type PayrollItem = {
-    id: string;
-    description: string;
-    amount: number;
-    type: PayrollItemType;
-};
+export const PayrollStatusSchema = z.enum(['DRAFT', 'PENDING', 'PAID', 'CANCELLED']);
+export type PayrollStatus = z.infer<typeof PayrollStatusSchema>;
 
-export type Payroll = {
-    id: string;
+export const PayrollSchema = z.object({
+    id: z.string(),
+    employee: EmployeeSchema,
+    period: PayrollPeriodSchema,
+    items: z.array(PayrollItemSchema),
+    grossAmount: z.number(),
+    totalEarnings: z.number(),
+    totalDeductions: z.number(),
+    netAmount: z.number(),
+    status: PayrollStatusSchema,
+    generatedAt: z.date(),
+    paymentDate: z.date().optional(),
+});
 
-    employee: Employee;
-
-    period: PayrollPeriod;
-
-    items: PayrollItem[];
-
-    grossAmount: number;
-    totalEarnings: number;
-    totalDeductions: number;
-    netAmount: number;
-
-    status: PayrollStatus;
-
-    generatedAt: Date;
-    paymentDate?: Date;
-};
+export type Payroll = z.infer<typeof PayrollSchema>
