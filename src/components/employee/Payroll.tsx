@@ -48,7 +48,7 @@ export default function PayrollTable ({ id }: Prop) {
                     <tbody>
                     {/* row 1 */}
                     {payrolls.map((p: Payroll, i: number) => (
-                        <tr>
+                        <tr key={p.id}>
                             <th>{i + 1}</th>
                             <td>{getPeriod(p.period)}</td>
                             <td>{p.paymentDate?.toLocaleDateString('pt-BR')}</td>
