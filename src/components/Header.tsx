@@ -1,9 +1,25 @@
 import { Icon } from "@mdi/react";
 import { mdiHome} from '@mdi/js'
 import { useNavigate } from "react-router-dom";
+import { memo, useRef } from "react"
+import { Employee } from "@/types/employee";
+import Profile from "./Profile";
 
-export default function Header() {
+type HeaderProps = {
+    employee: Employee,
+    onLogout?: () => void;
+}
+
+const Header = memo(function Header({ employee, onLogout }: HeaderProps) {
     const navigate = useNavigate();
+
+    const profileModalRef = useRef<HTMLDialogElement>(null);
+
+    function handleLogout() {
+        onLogout?.();
+        navigate('/login');
+    }
+
     return (
         <header className="bg-gray-800 text-white py-4">
             <div className="container mx-auto text-center">
@@ -29,17 +45,20 @@ export default function Header() {
                         tabIndex={-1}
                         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
                         <li>
-                        <a className="justify-between">
+                        <button className="justify-between" onClick={() => profileModalRef.current?.showModal()}>
                             Profile
                             {/* <span className="badge">New</span> */}
-                        </a>
+                        </button>
                         </li>
                         <li><a>Settings</a></li>
-                        <li><a>Logout</a></li>
+                        <li><button type="button" onClick={handleLogout}>Logout</button></li>
                     </ul>
                     </div>
                 </div>
             </div>
+            <Profile employee={employee} ref={profileModalRef}/>
         </header>
     );
-}
+});
+
+export default Header;
