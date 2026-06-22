@@ -1,4 +1,3 @@
-import { Employee } from "@/types/employee";
 import { PayrollDetailsResponse } from "@/types/dto";
 import { useQuery } from "@tanstack/react-query";
 import { useRef } from "react";
@@ -8,12 +7,9 @@ import { mdiFile, mdiPrinter } from "@mdi/js";
 import PayrollTable from "./Payroll";
 import PaycheckModal from "./PaycheckModal";
 import { getPeriod } from "../../utils/utils";
+import { EmployeeProps } from "@/types/props";
 
-type Props = {
-    employee: Employee
-}
-
-export default function Financial ({employee}: Props) {
+export default function Financial ({employee}: EmployeeProps) {
     const { data: userPaycheck,  isPending, isError } = useQuery<PayrollDetailsResponse>({
         queryKey: ['payrollDetails', {id: employee.id}],
         queryFn: () => getPayroll(employee.id)
@@ -26,7 +22,7 @@ export default function Financial ({employee}: Props) {
             <span className="loading loading-ring loading-lg"></span> : <></>}
         {userPaycheck ? (
         <div>
-            <div className="stats stats-vertical lg:stats-horizontal bg-base-100 border-base-300 border">
+            <div className="stats stats-vertical sm:stats-horizontal bg-base-100 border-base-300 border">
                 <div className="stat">
                     <div className="stat-title">Net Amount</div>
                     <div className="stat-value">
