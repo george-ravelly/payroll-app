@@ -1,4 +1,12 @@
+import z from "zod";
 import { PayrollItem, PayrollPeriod, PayrollStatus } from "./payroll";
+
+export const UserLoginSchema = z.object({
+    email: z.string().nonempty('E-mail is required!').email('Invalid e-mail format'),
+    cpf: z.string().nonempty('CPF is required!')
+})
+
+export type UserLogin = z.infer<typeof UserLoginSchema>
 
 export type CreatePayrollRequest = {
     employeeId: string;
