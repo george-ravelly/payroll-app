@@ -3,19 +3,17 @@ import { ForwardedRef } from "react";
 import { forwardRef } from "react"
 import { useQuery } from "@tanstack/react-query";
 import { getPayroll } from "../../utils/request";
+import Spinner from "../Spinner";
+import { PayrollDetailsResponse } from "@/types/dto";
 
 type Prop = {
-    id: string
+    payroll: PayrollDetailsResponse
 }
 type Ref = ForwardedRef<HTMLDialogElement>
 
 const PaycheckModal = forwardRef<HTMLDialogElement, Prop>((
-    { id }, ref: Ref
+    { payroll }, ref: Ref
 ) => {
-    const { data: payroll, isPending, isError } = useQuery({
-        queryKey: ['paycheckModal', id],
-        queryFn: () => getPayroll(id)
-    })
 
     return (
     <>

@@ -65,8 +65,8 @@ export default function Financial ({employee}: EmployeeProps) {
                     </div>
                 </div>
             </div>
-            <PaycheckModal id={userPaycheck.id} ref={paycheckModalRef} />
-            <PayrollTable id={userPaycheck.id} />
+            <PaycheckModal payroll={userPaycheck} ref={paycheckModalRef} />
+            <PayrollTable id={employee.id} />
         </div>
         ) : <></>}
     </>);

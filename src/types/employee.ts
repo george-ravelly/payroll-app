@@ -9,7 +9,7 @@ export const EmployeeSchema = z.object({
   phone: z.string(),
   active: z.boolean(),
   position: z.string(),
-  hireDate: z.date()
+  hireDate: z.coerce.date()
 });
 
 export type Employee = z.infer<typeof EmployeeSchema>;

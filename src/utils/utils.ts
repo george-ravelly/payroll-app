@@ -18,7 +18,7 @@ export const getErrorsMessage = (error: unknown): string => {
 
 
 export function getPeriod(period: PayrollPeriod) {
-    return `${period.month}/${period.year}`
+    return `${period?.month}/${period?.year}`
 }
 
 export const formatCurrency = (value: number) => value.toLocaleString("pt-BR", {
