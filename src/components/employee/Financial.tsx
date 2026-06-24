@@ -1,7 +1,7 @@
 import { PayrollDetailsResponse } from "@/types/dto";
 import { useQuery } from "@tanstack/react-query";
 import { useRef } from "react";
-import { getPayroll } from "../../utils/request";
+import { getlatestPayroll } from "../../utils/request";
 import {Icon} from "@mdi/react";
 import { mdiFile, mdiPrinter } from "@mdi/js";
 import PayrollTable from "./Payroll";
@@ -12,7 +12,7 @@ import { EmployeeProps } from "@/types/props";
 export default function Financial ({employee}: EmployeeProps) {
     const { data: userPaycheck,  isPending, isError } = useQuery<PayrollDetailsResponse>({
         queryKey: ['payrollDetails', {id: employee.id}],
-        queryFn: () => getPayroll(employee.id)
+        queryFn: () => getlatestPayroll(employee.id)
     });
 
     const paycheckModalRef = useRef<HTMLDialogElement>(null);
@@ -65,7 +65,7 @@ export default function Financial ({employee}: EmployeeProps) {
                     </div>
                 </div>
             </div>
-            <PaycheckModal payroll={userPaycheck} ref={paycheckModalRef} />
+            <PaycheckModal id={userPaycheck.id} ref={paycheckModalRef} />
             <PayrollTable id={employee.id} />
         </div>
         ) : <></>}

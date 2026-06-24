@@ -1,5 +1,5 @@
 import z from "zod";
-import { PayrollItem, PayrollPeriod, PayrollStatus } from "./payroll";
+import { PayrollItem, PayrollItemSchema, PayrollItemTypeSchema, PayrollPeriod, PayrollPeriodSchema, PayrollStatus, PayrollStatusSchema } from "./payroll";
 
 export const UserLoginSchema = z.object({
     email: z.string().nonempty('E-mail is required!').email('Invalid e-mail format'),
@@ -43,6 +43,23 @@ export type PayrollListItemResponse = {
 
     paymentDate?: Date;
 };
+
+export const PayrollDetailsReponseSchema = z.object({
+    id: z.string().nonempty("Id can not be empty!"),
+    employeeId: z.string().nonempty("Employee id can not be empty!"),
+    employeeName: z.string(),
+    departmentName: z.string(),
+    positionName: z.string(),
+    period: PayrollPeriodSchema,
+    items: z.array(PayrollItemSchema),
+    grossAmount: z.number(),
+    totalEarnings: z.number(),
+    totalDeductions: z.number(),
+    netAmount: z.number(),
+    status: PayrollStatusSchema,
+    generatedAt: z.coerce.date(),
+    paymentDate: z.coerce.date().optional()
+})
 
 export type PayrollDetailsResponse = {
     id: string;

@@ -1,4 +1,4 @@
-import { getPayrollHistory, getPayroll } from "../../utils/request"
+import { getPayrollHistory } from "../../utils/request"
 import { useQuery } from "@tanstack/react-query"
 import Spinner from "../Spinner"
 import { Payroll } from "@/types/payroll"

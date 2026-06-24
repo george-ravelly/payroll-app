@@ -1,19 +1,36 @@
-import { formatCurrency, getPeriod } from "../../utils/utils";
+import { formatCurrency, getErrorsMessage, getPeriod } from "../../utils/utils";
 import { ForwardedRef } from "react";
 import { forwardRef } from "react"
 import { useQuery } from "@tanstack/react-query";
-import { getPayroll } from "../../utils/request";
+import { getPayrollById } from "../../utils/request";
 import Spinner from "../Spinner";
-import { PayrollDetailsResponse } from "@/types/dto";
 
 type Prop = {
-    payroll: PayrollDetailsResponse
+    id: string
 }
 type Ref = ForwardedRef<HTMLDialogElement>
 
 const PaycheckModal = forwardRef<HTMLDialogElement, Prop>((
-    { payroll }, ref: Ref
+    { id }, ref: Ref
 ) => {
+    const { data: payroll, isPending, isError, error } = useQuery({
+        queryKey: ["paycheck-modal", id],
+        queryFn: () => getPayrollById(id)
+    })
+
+    const basicModal = (error: string) => {
+        return (
+            <div className="modal-box w-full">
+                <pre>{error}</pre>
+                <div className="modal-action">
+                    <form method="dialog">
+                        {/* if there is a button in form, it will close the modal */}
+                        <button className="btn">Close</button>
+                    </form>
+                </div>
+            </div>
+        )
+    }
 
     return (
     <>
@@ -22,6 +39,8 @@ const PaycheckModal = forwardRef<HTMLDialogElement, Prop>((
         ref={ref} 
         className="modal"
     >
+        {isPending ? <div className="modal-box"><Spinner></Spinner></div> : <></>}
+        {isError ? basicModal(getErrorsMessage(error)) : <></>}
         {payroll ? 
         <div className="modal-box w-full" style={{height: '80vh', width: '90vw', maxWidth: '1200px'}}>
             <div className="card bg-base-100 shadow-xl">
