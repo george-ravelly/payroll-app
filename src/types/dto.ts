@@ -1,10 +1,22 @@
 import z from "zod";
 import { PayrollItem, PayrollItemSchema, PayrollItemTypeSchema, PayrollPeriod, PayrollPeriodSchema, PayrollStatus, PayrollStatusSchema } from "./payroll";
+import { schedulerSchema } from "./employee";
 
 export const UserLoginSchema = z.object({
     email: z.string().nonempty('E-mail is required!').email('Invalid e-mail format'),
     cpf: z.string().nonempty('CPF is required!')
 })
+
+export const EmployeeSchedulerSchema = z.object({
+    id: z.string().nonempty(),
+    name: z.string().nonempty(),
+    position: z.string(),
+    schedules: schedulerSchema
+});
+
+
+
+export type EmployeeSchedule = z.infer<typeof EmployeeSchedulerSchema>;
 
 export type UserLogin = z.infer<typeof UserLoginSchema>
 

@@ -1,4 +1,4 @@
-import { PayrollDetailsReponseSchema, PayrollDetailsResponse, UserLoginSchema } from "../types/dto";
+import { EmployeeSchedule, EmployeeSchedulerSchema, PayrollDetailsReponseSchema, PayrollDetailsResponse, UserLoginSchema } from "../types/dto";
 import { Employee, EmployeeSchema } from "../types/employee";
 import { Payroll } from "../types/payroll";
 import { UserLogin } from "../types/dto";
@@ -39,6 +39,23 @@ export async function getPayrollById (id: string): Promise<PayrollDetailsRespons
 
     if (validPayrollDatails.success) return validPayrollDatails.data;
     else throw new Error(`Error to get payroll: ${getErrorsMessage(validPayrollDatails.error)}`);
+}
+
+
+export async function getSchedulerClockInOut(id: string): Promise<EmployeeSchedule> {
+    if (!id) throw new Error("Employee ID is required!");
+
+    const respose = await fetch(`${BASE_URL}/api/employees/schedule/${id}`);
+    const data = await respose.json();
+    
+    const validEmployeeSchedule = EmployeeSchedulerSchema.safeParse(data);
+    console.log(validEmployeeSchedule.success, validEmployeeSchedule.error, validEmployeeSchedule.data);
+    
+    if (validEmployeeSchedule.success) {
+        return validEmployeeSchedule.data
+    } else {
+        throw new Error(`Error to get employee ${id}: ${getErrorsMessage(validEmployeeSchedule.error)}`); 
+    };
 }
 
 export async function getEmployee(id: string): Promise<Employee> {

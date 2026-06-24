@@ -10,6 +10,20 @@ type Prop = {
 }
 type Ref = ForwardedRef<HTMLDialogElement>
 
+export const basicModal = (error: string) => {
+    return (
+        <div className="modal-box w-full">
+            <pre>{error}</pre>
+            <div className="modal-action">
+                <form method="dialog">
+                    {/* if there is a button in form, it will close the modal */}
+                    <button className="btn">Close</button>
+                </form>
+            </div>
+        </div>
+    )
+}
+
 const PaycheckModal = forwardRef<HTMLDialogElement, Prop>((
     { id }, ref: Ref
 ) => {
@@ -17,20 +31,6 @@ const PaycheckModal = forwardRef<HTMLDialogElement, Prop>((
         queryKey: ["paycheck-modal", id],
         queryFn: () => getPayrollById(id)
     })
-
-    const basicModal = (error: string) => {
-        return (
-            <div className="modal-box w-full">
-                <pre>{error}</pre>
-                <div className="modal-action">
-                    <form method="dialog">
-                        {/* if there is a button in form, it will close the modal */}
-                        <button className="btn">Close</button>
-                    </form>
-                </div>
-            </div>
-        )
-    }
 
     return (
     <>

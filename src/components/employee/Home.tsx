@@ -9,7 +9,7 @@ import QuickActions from "./QuickActions"
 export default function EmployeeHome({employee}: EmployeeProps) {
   return (
     <main className="m-5">
-      <QuickActions />
+      <QuickActions employeeId={employee.id}/>
       {/* 
         Ver Holerites
         Histórico de Pagamentos
